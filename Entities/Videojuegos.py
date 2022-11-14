@@ -64,7 +64,7 @@ class Videojuego:
                 else:
                     raise ValueError
             valor = promedio_years[0]*0.2 + promedio_years[1] * \
-                0.12+promedio_years[2]*0.5+promedio_years[3]*0.18
+            0.12+promedio_years[2]*0.5+promedio_years[3]*0.18
             self.valor = valor
 
         return self.valor

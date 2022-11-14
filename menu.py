@@ -2,22 +2,22 @@ from Entities.Desarrollador import Desarrollador
 from Entities.Videojuegos import Videojuego
 
 
-import datetime
+from datetime import datetime
 import time
 
 
 class Competencia:
     def __init__(self) -> None:
         self._videojuegos = []
-        self._Desarrolladores = []
+        self._desarrolladores = []
 
     @property
     def videojuegos(self):
         return self._videojuegos
 
     @property
-    def Desarrolladores(self):
-        return self._Desarrolladores
+    def desarrolladores(self):
+        return self._desarrolladores
 
     def Menu_principal(self):
 
@@ -32,7 +32,6 @@ class Competencia:
         print("")
 
         seleccion = int(input(" - Ingrese seleccion aqui: "))
-
         if seleccion == 1:
             return self.Alta_desarollador()
         elif seleccion == 2:
@@ -46,27 +45,11 @@ class Competencia:
         else:
             raise ValueError
 
-    def pedir_fecha(self):
-        try:
-            fecha = input(" - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
-            fecha = fecha.split("/")
-            fecha1 = datetime.date(fecha[2], fecha[1], fecha[0])
-
-            if datetime.date.today-fecha1 < 0:
-                raise ValueError
-        except:
-            print("Uno o más datos ingresados son inválidos, intente nuevamente")
-            time.sleep(2)
-            self.Menu_principal()
-
-        return fecha1
-
     def Alta_desarollador(self):
-
         print("Alta de desarrollador")
-
+        
+        # Cedula
         cedula = (input(" - Ingresar Cedula: "))
-
         try:
             if len(cedula) == 8:
                 cedula = int(cedula)
@@ -76,13 +59,15 @@ class Competencia:
             print("Uno o más datos ingresados son inválidos, intente nuevamente")
             time.sleep(2)
             self.Menu_principal()
-
+        
+        # Nombre y Apellido
         nombre = input(" - Ingresar Nombre: ")
-
         apellido = input(" - Ingresar Apellido: ")
-
+        
+        # fecha
         fecha = self.pedir_fecha()
-
+        
+        # Pais
         print(" - Seleccionar país de origen (o nacimiento):")
         print("")
         pais_de_origen = ["Uruguay", "Argentina", "Brasil", "Chile"]
@@ -93,10 +78,13 @@ class Competencia:
         print("")
         pais = int(input(" - Ingresar Seleccion: "))
         pais_origen = pais_de_origen[pais]
-
+        
+        # Años de desarrollo
         años_de_desarrollo = input(
             " - Ingrese años de desarrollo de videojuegos:")
         print("")
+        
+        # Roles
         roles = ["Diseñador", "Productor", "Programador", "Tester"]
         contador = 1
         for rol in roles:
@@ -105,12 +93,27 @@ class Competencia:
         print("")
         rol = int(input("Ingresar Seleccion: "))
 
-        desarollador = Desarrollador(
-            cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol)
-        self.desarolloadores.append(desarollador)
+        # agrego el desarrollador
+        self.desarrolladores.append(Desarrollador(cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol))
         print("Desarollador agregado correctamente!")
         time.sleep(2)
         return self.Menu_principal()
+
+    def pedir_fecha(self):
+        try:
+            date_input = input(
+                " - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
+            date_formating = date_input.split("/")
+            date_formating = datetime(int(date_formating[2]), int(
+            date_formating[1]), int(date_formating[0]))
+
+            if datetime.now() < date_formating:
+                raise ValueError
+        except:
+            print("Uno o más datos ingresados son inválidos, intente nuevamente")
+            time.sleep(2)
+            self.Menu_principal()
+        return date_input
 
     def Alta_videojuego(self):
         print("Alta de videojuego (ingresar 0 para salir):")
@@ -187,7 +190,7 @@ class Competencia:
 
     def determinar_10_mejores(self):
         podio = []
-        for desarollador in self.Desarrolladores:
+        for desarollador in self.desarrolladores:
             value = desarollador.cantidad_de_años_de_desarollo
             nombre = desarollador
             podio.extend([[value, nombre]])
@@ -211,7 +214,7 @@ class Competencia:
 
     def determinar_5_mejores(self):
         listita = [
-            programador for programador in self.Desarrolladores if programador.rol == "Programador"]
+            programador for programador in self.desarrolladores if programador.rol == "Programador"]
         podio = []
 
         for desarollador in listita:
@@ -231,7 +234,7 @@ class Competencia:
 
         print(podio)
 
-    def determinar_los_7_Desarrolladores_de_edad_mas_avanzada(self):
+    def determinar_los_7_desarrolladores_de_edad_mas_avanzada(self):
         pass
 
     def determinar_mejores_deasarolladores_Uruguayos(self):
