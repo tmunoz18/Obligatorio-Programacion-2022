@@ -50,20 +50,36 @@ class Competencia:
         
         # Cedula
         cedula = (input(" - Ingresar Cedula: "))
+        # verifico que la cedula sea un dato correcto
         try:
             if len(cedula) == 8:
                 cedula = int(cedula)
             else:
                 raise ValueError
         except ValueError:
-            print("Uno o más datos ingresados son inválidos, intente nuevamente")
+            print("Cedula ingresada es inválida, intente nuevamente")
+            time.sleep(2)
+            self.Menu_principal()
+        # verifico si ya existe un desarrollador ingresado con esta cedula
+        try:
+            if self.existe_desarrollador(cedula):
+                raise ValueError
+        except ValueError:
+            print("Este desarrollador ya existe")
             time.sleep(2)
             self.Menu_principal()
         
         # Nombre y Apellido
         nombre = input(" - Ingresar Nombre: ")
         apellido = input(" - Ingresar Apellido: ")
-        
+        # verifico que el nombre y el apellido no sean numeros
+        try:
+            if nombre.isnumeric() or apellido.isnumeric():
+                raise ValueError
+        except ValueError:
+            print("Nombre o Apellido ingresado es inválidos, intente nuevamente")
+            time.sleep(2)
+            self.Menu_principal()
         # fecha
         fecha = self.pedir_fecha()
         
@@ -99,29 +115,32 @@ class Competencia:
         time.sleep(2)
         return self.Menu_principal()
 
+    def existe_desarrollador(self, ci):
+        existe = False
+        for dev in self._desarrolladores:
+            if dev.cedula == ci:
+                existe = True
+        return existe
+    
     def pedir_fecha(self):
         try:
-            date_input = input(
-                " - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
+            date_input = input(" - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
             date_formating = date_input.split("/")
-            date_formating = datetime(int(date_formating[2]), int(
-            date_formating[1]), int(date_formating[0]))
+            date_formating = datetime(int(date_formating[2]), int(date_formating[1]), int(date_formating[0]))
 
             if datetime.now() < date_formating:
                 raise ValueError
         except:
-            print("Uno o más datos ingresados son inválidos, intente nuevamente")
+            print("Fecha de Nacimiento inválido, intente nuevamente")
             time.sleep(2)
             self.Menu_principal()
         return date_input
 
     def Alta_videojuego(self):
         print("Alta de videojuego (ingresar 0 para salir):")
-
         nombre = input(" - Ingrese nombre del videjuego:")
 
-        categoria = input(
-            " - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle):")
+        categoria = input(" - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle):")
         categorias = ["Acción", "Aventura", " Estrategia", "Puzzle"]
         categorias_juego = []
         categoria = categoria.split(',')
@@ -139,7 +158,7 @@ class Competencia:
 
         videojuego = Videojuego(nombre, categorias_juego)
         for desarollador in integrantes:
-            for desarollador1 in self.desarolloadores:
+            for desarollador1 in self.desarrolladores:
                 if desarollador == desarollador1:
                     videojuego.desarrolladores_asociados.append()
 
@@ -281,7 +300,7 @@ class Competencia:
     def Finalizar_programa(self):
         print("Finalizar programa...")
         time.sleep(2)
-        exit()
+        # exit()
 
 
 # with open("data.txt","wb") as f:
