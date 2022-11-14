@@ -105,7 +105,7 @@ class Competencia:
         print("")
         rol = int(input("Ingresar Seleccion: "))
 
-        desarollador = Desarrolladores(
+        desarollador = Desarrollador(
             cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol)
         self.desarolloadores.append(desarollador)
         print("Desarollador agregado correctamente!")
@@ -138,7 +138,7 @@ class Competencia:
         for desarollador in integrantes:
             for desarollador1 in self.desarolloadores:
                 if desarollador == desarollador1:
-                    videojuego.Desarrolladores_asociados.append()
+                    videojuego.desarrolladores_asociados.append()
 
         videojuego.comprobar_minimo()
 
@@ -239,7 +239,7 @@ class Competencia:
 
         for videojuego in self.videojuegos:
             value = len(
-                [desarollador for desarollador in videojuego.Desarrolladores_asociados if desarollador.pais_de_origen == "Uruguay"])
+                [desarollador for desarollador in videojuego.desarrolladores_asociados if desarollador.pais_de_origen == "Uruguay"])
             nombre = videojuego
             podio.extend([[value, nombre]])
 

@@ -1,3 +1,8 @@
+# cedular len 8
+# pais de origen [Argentina, Brasil, Chile, Uruguay]
+# fecha de nacimiento > cantidad de años de desarrollo en videojuegos
+# rol [Diseñador, productor, programador, tester]
+
 class Desarrollador:
     def __init__(self, cedula: int, nombre: str, apellido: str, pais_de_origen: str, fecha_de_nacimiento: str, cantidad_de_años_de_desarollo: int, rol: str) -> None:
 
@@ -12,6 +17,7 @@ class Desarrollador:
     @property
     def cedula(self):
         return self._cedula
+    
 
     @property
     def nombre(self):
