@@ -1,22 +1,14 @@
-import datetime
-
-
 class Desarolladores:
-    def __init__(self,cedula:int , nombre:str,
-     apellido:str, pais_de_origen:str,
-      fecha_de_nacimiento:str, 
-      cantidad_de_años_de_desarollo:int, rol:str) -> None:
+    def __init__(self,cedula:int , nombre:str, apellido:str, pais_de_origen:str, fecha_de_nacimiento:str, cantidad_de_años_de_desarollo:int, rol:str) -> None:
 
-        self._cedula=cedula
-        self._nombre=nombre
-        self._apellido=apellido
-        self._pais_de_origen=pais_de_origen
-        self._fecha_de_nacimiento=fecha_de_nacimiento
-        self.cantidad_de_años_de_desarollo=cantidad_de_años_de_desarollo
-        self._rol=rol
-        
+        self._cedula = cedula
+        self._nombre = nombre
+        self._apellido = apellido
+        self._pais_de_origen = pais_de_origen
+        self._fecha_de_nacimiento = fecha_de_nacimiento
+        self.cantidad_de_años_de_desarollo = cantidad_de_años_de_desarollo
+        self._rol = rol
     
-
     @property
     def cedula(self):
         return self._cedula
@@ -35,18 +27,13 @@ class Desarolladores:
     @property
     def fecha_de_nacimiento(self):
         return self._fecha_de_nacimiento
-    
-    
 
     @property
     def rol(self):
         return self._rol
-
     
-
-    
-    def __repr__(self) -> str:
-        return "[{} ,{} ,{} ,{} ,{} ,{}, {}]".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo,self.rol)
+    def __str__(self) -> str:
+        return "[{} ,{} ,{} ,{} ,{} ,{}, {}]".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)
         
     def __eq__(self,cedula_otro):
         return self.cedula==cedula_otro
