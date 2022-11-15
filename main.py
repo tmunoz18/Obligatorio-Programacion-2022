@@ -1,6 +1,6 @@
 from Entities.Desarrollador import Desarrollador
 from Entities.Videojuegos import Videojuego
-from menu import Competencia
+from Competencia import Competencia
 from Exceptions.FaltanIntegrantes import FaltanIntegrantes
 
 if __name__ == "__main__":

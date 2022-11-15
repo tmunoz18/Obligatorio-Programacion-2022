@@ -2,7 +2,7 @@ from Entities.Desarrollador import Desarrollador
 from Entities.Videojuegos import Videojuego
 
 
-from datetime import datetime
+import datetime
 import time
 
 
@@ -81,7 +81,7 @@ class Competencia:
             time.sleep(2)
             self.Menu_principal()
         # fecha
-        fecha = self.pedir_fecha()
+        fecha, fecha_datetime = self.pedir_fecha()
         
         # Pais
         print(" - Seleccionar país de origen (o nacimiento):")
@@ -91,14 +91,31 @@ class Competencia:
         for pais in pais_de_origen:
             print(f"{contador}. {pais}")
             contador += 1
-        print("")
-        pais = int(input(" - Ingresar Seleccion: "))
-        pais_origen = pais_de_origen[pais]
+        print("")    
+        try:
+            pais = int(input(" - Ingresar Seleccion: "))
+            if pais - 1 >= 0 and pais - 1 <= 3:
+                pais_origen = pais_de_origen[pais-1]
+            else:
+                raise ValueError
+        except ValueError:
+            print("Pais Fuera de rango")
+            time.sleep(2)
+            self.Menu_principal()
         
         # Años de desarrollo
         años_de_desarrollo = input(
             " - Ingrese años de desarrollo de videojuegos:")
         print("")
+        
+        try:
+            inicio_laboral = datetime.date.today() - datetime.timedelta(days = int(años_de_desarrollo) * 365)
+            if inicio_laboral < fecha_datetime:
+                raise ValueError
+        except ValueError:
+            print("Años de desarrollo invalido")
+            time.sleep(2)
+            self.Menu_principal()
         
         # Roles
         roles = ["Diseñador", "Productor", "Programador", "Tester"]
@@ -107,8 +124,17 @@ class Competencia:
             print(f"{contador}. {rol}")
             contador += 1
         print("")
-        rol = int(input("Ingresar Seleccion: "))
-
+        try:
+            rol = int(input("Ingresar Seleccion: "))
+            if rol - 1 >= 0 and rol - 1 <= 3:
+                rol = roles[rol-1]
+            else:
+                raise ValueError
+        except ValueError:
+            print("Rol Fuera de rango")
+            time.sleep(2)
+            self.Menu_principal()
+        
         # agrego el desarrollador
         self.desarrolladores.append(Desarrollador(cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol))
         print("Desarollador agregado correctamente!")
@@ -126,15 +152,14 @@ class Competencia:
         try:
             date_input = input(" - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
             date_formating = date_input.split("/")
-            date_formating = datetime(int(date_formating[2]), int(date_formating[1]), int(date_formating[0]))
-
-            if datetime.now() < date_formating:
+            date_formating = datetime.date(int(date_formating[2]), int(date_formating[1]), int(date_formating[0]))
+            if datetime.date.today() < date_formating:
                 raise ValueError
         except:
             print("Fecha de Nacimiento inválido, intente nuevamente")
             time.sleep(2)
             self.Menu_principal()
-        return date_input
+        return date_input, date_formating
 
     def Alta_videojuego(self):
         print("Alta de videojuego (ingresar 0 para salir):")
