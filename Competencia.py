@@ -47,7 +47,7 @@ class Competencia:
 
     def Alta_desarollador(self):
         print("Alta de desarrollador")
-        
+
         # Cedula
         cedula = (input(" - Ingresar Cedula: "))
         # verifico que la cedula sea un dato correcto
@@ -68,7 +68,7 @@ class Competencia:
             print("Este desarrollador ya existe")
             time.sleep(2)
             self.Menu_principal()
-        
+
         # Nombre y Apellido
         nombre = input(" - Ingresar Nombre: ")
         apellido = input(" - Ingresar Apellido: ")
@@ -82,7 +82,7 @@ class Competencia:
             self.Menu_principal()
         # fecha
         fecha, fecha_datetime = self.pedir_fecha()
-        
+
         # Pais
         print(" - Seleccionar país de origen (o nacimiento):")
         print("")
@@ -91,7 +91,7 @@ class Competencia:
         for pais in pais_de_origen:
             print(f"{contador}. {pais}")
             contador += 1
-        print("")    
+        print("")
         try:
             pais = int(input(" - Ingresar Seleccion: "))
             if pais - 1 >= 0 and pais - 1 <= 3:
@@ -102,21 +102,22 @@ class Competencia:
             print("Pais Fuera de rango")
             time.sleep(2)
             self.Menu_principal()
-        
+
         # Años de desarrollo
         años_de_desarrollo = input(
             " - Ingrese años de desarrollo de videojuegos:")
         print("")
-        
+
         try:
-            inicio_laboral = datetime.date.today() - datetime.timedelta(days = int(años_de_desarrollo) * 365)
+            inicio_laboral = datetime.date.today(
+            ) - datetime.timedelta(days=int(años_de_desarrollo) * 365)
             if inicio_laboral < fecha_datetime:
                 raise ValueError
         except ValueError:
             print("Años de desarrollo invalido")
             time.sleep(2)
             self.Menu_principal()
-        
+
         # Roles
         roles = ["Diseñador", "Productor", "Programador", "Tester"]
         contador = 1
@@ -134,9 +135,10 @@ class Competencia:
             print("Rol Fuera de rango")
             time.sleep(2)
             self.Menu_principal()
-        
+
         # agrego el desarrollador
-        self.desarrolladores.append(Desarrollador(cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol))
+        self.desarrolladores.append(Desarrollador(
+            cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol))
         print("Desarollador agregado correctamente!")
         time.sleep(2)
         return self.Menu_principal()
@@ -147,12 +149,14 @@ class Competencia:
             if dev.cedula == ci:
                 existe = True
         return existe
-    
+
     def pedir_fecha(self):
         try:
-            date_input = input(" - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
+            date_input = input(
+                " - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
             date_formating = date_input.split("/")
-            date_formating = datetime.date(int(date_formating[2]), int(date_formating[1]), int(date_formating[0]))
+            date_formating = datetime.date(int(date_formating[2]), int(
+                date_formating[1]), int(date_formating[0]))
             if datetime.date.today() < date_formating:
                 raise ValueError
         except:
@@ -165,14 +169,22 @@ class Competencia:
         # nombre de juego
         print("Alta de videojuego (ingresar 0 para salir):")
         nombre = input(" - Ingrese nombre del videjuego:")
-
+        if len(self.videojuegos) != 0:
+            try:
+                for videjuego in self.videojuegos:
+                    if videjuego.nombre == nombre:
+                        raise ValueError
+            except:
+                print("{} ya esta registrado".format(nombre))
+                time.sleep(2)
+                self.Menu_principal()
         # categoria de juego
         categoria = input(" - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle):")
         categorias = ["Acción", "Aventura", " Estrategia", "Puzzle"]
         categorias_juego = []
-        
+
         try:
-            categoria = categoria.split(',')
+            categoria = set(categoria.split(','))
             categoria = [int(x) for x in categoria]
             for i in categoria:
                 if i-1 <= 3 and i-1 >= 0:
@@ -180,26 +192,70 @@ class Competencia:
                 else:
                     raise ValueError
         except ValueError:
-            print("categoria invalida")
+            print("categorias {} invalidas".format(categoria))
             time.sleep(2)
             self.Menu_principal()
-            
-        
 
+        # integrates de juego
         integrantes = []
-        cantidad_de_integrantes = int(input(' - Ingresar cantidad de integrantes:'))
-        for i in range(cantidad_de_integrantes):
-            cedula_desarollador = input(" - Ingrese cédula de desarrollador(" + str(i+1) + " de " + str(cantidad_de_integrantes) + "): ")
-            integrantes.append(cedula_desarollador)
+        cantidad_de_integrantes = None
+        # compruebo que el dato ingresado por el usuario es valido
+        try:
+            cantidad_de_integrantes = int(input(' - Ingresar cantidad de integrantes (minimo 8):'))
+            if cantidad_de_integrantes < 8:
+                raise ValueError
+        except ValueError:
+            if cantidad_de_integrantes is None:
+                print("Valor invalido")
+                time.sleep(2)
+                self.Menu_principal()
+            else:
+                print("Minimo de integrantes 8, usted digito {}".format(cantidad_de_integrantes))
+                time.sleep(2)
+                self.Menu_principal()
 
+        # pregunto la cedula de los integrantes
+        for i in range(cantidad_de_integrantes):
+            cedula_desarrollador = int(input(" - Ingrese cédula de desarrollador(" + str(i+1) + " de " + str(cantidad_de_integrantes) + "): "))
+            # compruebo que el desarrollador exista, y no este duplicado
+            try:
+                if not self.existe_desarrollador(int(cedula_desarrollador)) or cedula_desarrollador in integrantes:
+                    raise ValueError
+            except ValueError:
+                print("cedula {} es invalida o ya fue cargada anteriormente".format(cedula_desarrollador))
+                time.sleep(2)
+                self.Menu_principal()
+            if len(self.videojuegos) != 0:
+                try:
+                    for otro_videjuego in self.videojuegos:
+                        for dev_otro_videjuego in otro_videjuego.desarrolladores_asociados:
+                            if dev_otro_videjuego.cedula == int(cedula_desarrollador):
+                                raise ValueError
+                except:
+                    print("desarrollador {} esta asociado a otro juego".format(cedula_desarrollador))
+                    time.sleep(2)
+                    self.Menu_principal()
+            integrantes.append(cedula_desarrollador)
+
+        # creo el objeto videojuego
         videojuego = Videojuego(nombre, categorias_juego)
+
+        # busco y agrego el objeto desarrollador mediante la cedula
         for ci_desarrollador in integrantes:
             for desarollador in self.desarrolladores:
                 if int(ci_desarrollador) == desarollador.cedula:
                     videojuego.desarrolladores_asociados.append(desarollador)
 
-        videojuego.comprobar_minimo()
+        # compruebo el minimo de tecnicos
+        try:
+            if not videojuego.cumple_minimo():
+                raise ValueError
+        except ValueError:
+            print("el juego {} no cumple con el minimo de composicion".format(videojuego.nombre))
+            time.sleep(2)
+            self.Menu_principal()
 
+        # agrego el videjuego a la comptenecia
         self.videojuegos.append(videojuego)
         print("Videojuego agregado satisfactoriamente!")
         time.sleep(2)
@@ -336,7 +392,7 @@ class Competencia:
     def Finalizar_programa(self):
         print("Finalizar programa...")
         time.sleep(2)
-        # exit()
+        exit()
 
 
 # with open("data.txt","wb") as f:

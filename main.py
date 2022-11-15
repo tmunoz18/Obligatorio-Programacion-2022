@@ -13,8 +13,8 @@ if __name__ == "__main__":
     Persona6 = Desarrollador(10000006, "Mara", "Hurtado","Uruguay", "18/10/2003", 2, "Programador")
     Persona7 = Desarrollador(10000007, "Leonardo", "Palau","Uruguay", "18/10/2003", 2, "Tester")
     Persona8 = Desarrollador(10000008, "Samira", "Peral","Uruguay", "18/10/2003", 2, "Tester")
-    # Team1 = Videojuego("Lospibes", "Acción")
-    # Team1.desarrolladores_asociados.extend([Persona1, Persona2, Persona3, Persona4, Persona5, Persona6, Persona7, Persona8])
+    Team1 = Videojuego("Lospibes", "Acción")
+    Team1.desarrolladores_asociados.extend([Persona1, Persona2, Persona3, Persona4, Persona5, Persona6, Persona7, Persona8])
 
     # # Carga de datos del team 2
     Persona9  = Desarrollador(10000009, "Joan", "Carranza", "Argentina", "18/10/2003", 10, "Diseñador")
@@ -31,8 +31,6 @@ if __name__ == "__main__":
     # carga de datos de Competencia
     competencia = Competencia()
     competencia.desarrolladores.extend([Persona1, Persona2, Persona3, Persona4, Persona5, Persona6, Persona7, Persona8, Persona9, Persona10, Persona11, Persona12, Persona13, Persona14, Persona15, Persona16])
-    # competencia.videojuegos.extend([Team1, Team2])
+    competencia.videojuegos.extend([Team1])
     
     competencia.Menu_principal()
-
-    print("hola")

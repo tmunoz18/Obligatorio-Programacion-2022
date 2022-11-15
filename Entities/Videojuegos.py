@@ -6,17 +6,17 @@ class Videojuego:
         self._categoria = categoria
         self._desarrolladores_asociados = []
         self.valor = None
-    
-    def comprobar_minimo(self):
+
+    def cumple_minimo(self):
         diseñadores = 2
         productores = 1
         programadores = 3
         testers = 2
 
         integrantes_ok = True
-        
+
         equipo_min = [diseñadores, productores, programadores, testers]
-        
+
         for desarollador in self.desarrolladores_asociados:
             if desarollador.rol == "Diseñador":
                 equipo_min[0] = equipo_min[0]-1
@@ -31,11 +31,7 @@ class Videojuego:
             if cantidad > 0:
                 integrantes_ok = False
 
-        if integrantes_ok:
-            return ("El equipo de desarollo del juego {} cumple con el minimo necesario de integrantes".format(self.nombre))
-        else:
-            #raise FaltanIntegrantes("Faltan integrantes en el equipo:{}".format(self.nombre))
-            raise ValueError
+        return integrantes_ok
 
     def todo_sea_por_la_eficiencia(self, promedio_years, desarollador, indice):
         if promedio_years[indice] != 0:
@@ -64,11 +60,11 @@ class Videojuego:
                 else:
                     raise ValueError
             valor = promedio_years[0]*0.2 + promedio_years[1] * \
-            0.12+promedio_years[2]*0.5+promedio_years[3]*0.18
+                0.12+promedio_years[2]*0.5+promedio_years[3]*0.18
             self.valor = valor
 
         return self.valor
-    
+
     @property
     def nombre(self):
         return self._nombre
