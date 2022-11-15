@@ -41,6 +41,3 @@ class Desarrollador:
 
     def __str__(self) -> str:
         return "[{} ,{} ,{} ,{} ,{} ,{}, {}]".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)
-
-    def __eq__(self, cedula_otro):
-        return self.cedula == cedula_otro

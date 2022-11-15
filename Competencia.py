@@ -162,30 +162,41 @@ class Competencia:
         return date_input, date_formating
 
     def Alta_videojuego(self):
+        # nombre de juego
         print("Alta de videojuego (ingresar 0 para salir):")
         nombre = input(" - Ingrese nombre del videjuego:")
 
+        # categoria de juego
         categoria = input(" - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle):")
         categorias = ["Acción", "Aventura", " Estrategia", "Puzzle"]
         categorias_juego = []
-        categoria = categoria.split(',')
-        categoria = [int(x) for x in categoria]
-        for i in categoria:
-            categorias_juego.append(categorias[i-1])
+        
+        try:
+            categoria = categoria.split(',')
+            categoria = [int(x) for x in categoria]
+            for i in categoria:
+                if i-1 <= 3 and i-1 >= 0:
+                    categorias_juego.append(categorias[i-1])
+                else:
+                    raise ValueError
+        except ValueError:
+            print("categoria invalida")
+            time.sleep(2)
+            self.Menu_principal()
+            
+        
 
         integrantes = []
-        cantidad_de_integrantes = int(
-            input(' - Ingresar cantidad de integrantes:'))
+        cantidad_de_integrantes = int(input(' - Ingresar cantidad de integrantes:'))
         for i in range(cantidad_de_integrantes):
-            cedula_desarollador = input(
-                " - Ingrese cédula de desarrollador: (realizar este paso la cantidad de veces necesarias)")
+            cedula_desarollador = input(" - Ingrese cédula de desarrollador(" + str(i+1) + " de " + str(cantidad_de_integrantes) + "): ")
             integrantes.append(cedula_desarollador)
 
         videojuego = Videojuego(nombre, categorias_juego)
-        for desarollador in integrantes:
-            for desarollador1 in self.desarrolladores:
-                if desarollador == desarollador1:
-                    videojuego.desarrolladores_asociados.append()
+        for ci_desarrollador in integrantes:
+            for desarollador in self.desarrolladores:
+                if int(ci_desarrollador) == desarollador.cedula:
+                    videojuego.desarrolladores_asociados.append(desarollador)
 
         videojuego.comprobar_minimo()
 
