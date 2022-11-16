@@ -1,4 +1,6 @@
 # Obligatorio-Programacion-2022
+Integrantes: Gaspar Morales, Tomás Muñoz
+
 
 Requisitos
 -Python 3.10.4
