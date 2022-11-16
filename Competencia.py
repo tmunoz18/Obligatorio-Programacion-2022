@@ -30,20 +30,24 @@ class Competencia:
         print("     4. Realizar consultas")
         print("     5. Finalizar programa")
         print("")
-
-        seleccion = int(input(" - Ingrese seleccion aqui: "))
-        if seleccion == 1:
-            return self.Alta_desarollador()
-        elif seleccion == 2:
-            return self.Alta_videojuego()
-        elif seleccion == 3:
-            return self.Simular_Competencia()
-        elif seleccion == 4:
-            return self.Realizar_consulta()
-        elif seleccion == 5:
-            return self.Finalizar_programa()
-        else:
-            raise ValueError
+        try:
+            seleccion = int(input(" - Ingrese seleccion aqui: "))
+            if seleccion == 1:
+                self.Alta_desarollador()
+            elif seleccion == 2:
+                self.Alta_videojuego()
+            elif seleccion == 3:
+                self.Simular_Competencia()
+            elif seleccion == 4:
+                self.Realizar_consulta()
+            elif seleccion == 5:
+                self.Finalizar_programa()
+            else:
+                raise ValueError
+        except:
+            print("Seleccion Invalida")
+            time.sleep(2)
+            self.Menu_principal()
 
     def Alta_desarollador(self):
         print("Alta de desarrollador")
@@ -104,8 +108,7 @@ class Competencia:
             self.Menu_principal()
 
         # Años de desarrollo
-        años_de_desarrollo = input(
-            " - Ingrese años de desarrollo de videojuegos:")
+        años_de_desarrollo = input(" - Ingrese años de desarrollo de videojuegos: ")
         print("")
 
         try:
@@ -152,11 +155,9 @@ class Competencia:
 
     def pedir_fecha(self):
         try:
-            date_input = input(
-                " - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
+            date_input = input(" - Ingresar Fecha de nacimiento (DD/MM/AAAA): ")
             date_formating = date_input.split("/")
-            date_formating = datetime.date(int(date_formating[2]), int(
-                date_formating[1]), int(date_formating[0]))
+            date_formating = datetime.date(int(date_formating[2]), int(date_formating[1]), int(date_formating[0]))
             if datetime.date.today() < date_formating:
                 raise ValueError
         except:
@@ -168,7 +169,7 @@ class Competencia:
     def Alta_videojuego(self):
         # nombre de juego
         print("Alta de videojuego (ingresar 0 para salir):")
-        nombre = input(" - Ingrese nombre del videjuego:")
+        nombre = input(" - Ingrese nombre del videjuego: ")
         if len(self.videojuegos) != 0:
             try:
                 for videjuego in self.videojuegos:
@@ -179,7 +180,7 @@ class Competencia:
                 time.sleep(2)
                 self.Menu_principal()
         # categoria de juego
-        categoria = input(" - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle):")
+        categoria = input(" - Ingrese categorías del videojuego (1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle): ")
         categorias = ["Acción", "Aventura", " Estrategia", "Puzzle"]
         categorias_juego = []
 
@@ -201,7 +202,7 @@ class Competencia:
         cantidad_de_integrantes = None
         # compruebo que el dato ingresado por el usuario es valido
         try:
-            cantidad_de_integrantes = int(input(' - Ingresar cantidad de integrantes (minimo 8):'))
+            cantidad_de_integrantes = int(input(' - Ingresar cantidad de integrantes (minimo 8): '))
             if cantidad_de_integrantes < 8:
                 raise ValueError
         except ValueError:
@@ -271,7 +272,7 @@ class Competencia:
         print("")
         
         try:
-            categoria = int(input(" - Ingrese categoría del videojuego para la competencia:"))
+            categoria = int(input(" - Ingrese categoría del videojuego para la competencia: "))
             if categoria < 1 or 4 < categoria:
                 raise ValueError
         except:
@@ -307,31 +308,23 @@ class Competencia:
 
     def determinar_10_mejores(self):
         podio = []
-        for desarollador in self.desarrolladores:
-            value = desarollador.cantidad_de_años_de_desarollo
-            nombre = desarollador
+        for desarrollador in self.desarrolladores:
+            value = desarrollador.cantidad_de_años_de_desarollo
+            nombre = desarrollador
             podio.extend([[value, nombre]])
 
-        podio = sorted(
-            podio, key=lambda posicion_1: posicion_1[0], reverse=True)
-        podio1 = [persona[1] for persona in podio]
+        podio = sorted(podio, key=lambda posicion_1: posicion_1[0], reverse=True)
+        podio = [persona[1] for persona in podio]
 
-        podio = {"Primer Lugar": podio1[0],
-                 "Segundo Lugar": podio1[1],
-                 "Tercer Lugar": podio1[2],
-                 "Cuarto Lugar": podio1[3],
-                 "Quinto Lugar": podio1[4],
-                 "Sexto Lugar": podio1[5],
-                 "Septimo Lugar": podio1[6],
-                 "Octavo Lugar": podio1[7],
-                 "Noveno Lugar": podio1[8],
-                 "Decimo Lugar": podio1[9]}
-
-        print(podio)
+        cont = 1
+        for integrante in podio[:10]:
+            print(f'posicion nº {cont} \n{integrante.__dict__}\n')
+            cont += 1
+        time.sleep(2)
+        self.Menu_principal()
 
     def determinar_5_mejores(self):
-        listita = [
-            programador for programador in self.desarrolladores if programador.rol == "Programador"]
+        listita = [programador for programador in self.desarrolladores if programador.rol == "Programador"]
         podio = []
 
         for desarollador in listita:
@@ -339,61 +332,71 @@ class Competencia:
             nombre = desarollador
             podio.extend([[value, nombre]])
 
-        podio = sorted(
-            podio, key=lambda posicion_1: posicion_1[0], reverse=True)
-        podio1 = [persona[1] for persona in podio]
+        podio = sorted(podio, key=lambda posicion_1: posicion_1[0], reverse=True)
+        podio = [persona[1] for persona in podio]
 
-        podio = {"Primer Lugar": podio1[0],
-                 "Segundo Lugar": podio1[1],
-                 "Tercer Lugar": podio1[2],
-                 "Cuarto Lugar": podio1[3],
-                 "Quinto Lugar": podio1[4]}
-
-        print(podio)
+        cont = 1
+        for integrante in podio[:5]:
+            print(f'posicion nº {cont} \n{integrante.__dict__}\n')
+            cont += 1
+        time.sleep(2)
+        self.Menu_principal()
 
     def determinar_los_7_desarrolladores_de_edad_mas_avanzada(self):
-        pass
+        podio = []
+        for desarollador in self.desarrolladores:
+            date_format = desarollador.fecha_de_nacimiento.split("/")
+            date_format = int(date_format[2] + date_format[1] + date_format[0])
+            nombre = desarollador
+            podio.extend([[date_format, nombre]])
+        
+        podio = sorted(podio, key=lambda posicion_1: posicion_1[0])
+        podio = [persona[1] for persona in podio]
+        cont = 1
+        for integrante in podio[:7]:
+            print(f'posicion nº {cont} \n{integrante.__dict__}\n')
+            cont += 1
+        time.sleep(2)
+        self.Menu_principal()
 
-    def determinar_mejores_deasarolladores_Uruguayos(self):
+    def determinar_el_videojuego_con_mas_desarrolladores_uruguayos(self):
         podio = []
 
         for videojuego in self.videojuegos:
-            value = len(
-                [desarollador for desarollador in videojuego.desarrolladores_asociados if desarollador.pais_de_origen == "Uruguay"])
+            value = len([desarollador for desarollador in videojuego.desarrolladores_asociados if desarollador.pais_de_origen == "Uruguay"])
             nombre = videojuego
             podio.extend([[value, nombre]])
 
-        podio = sorted(
-            podio, key=lambda posicion_1: posicion_1[0], reverse=True)
-        podio1 = [persona[1] for persona in podio]
+        podio = sorted(podio, key=lambda posicion_1: posicion_1[0], reverse=True)
+        podio = [persona[1] for persona in podio]
 
-        podio = podio1[0].__dict__
-
-        print(podio)
+        print(podio[0].__dict__)
+        time.sleep(2)
+        self.Menu_principal()
 
     def Realizar_consulta(self):
         print("Realizar Consulta")
         print("1. Determine los 10 mejores desarrolladores registrados (basados en años de desarrollo)")
-        print("2. Determine los 5 mejores desarrolladores con el rol de Programador basados en años de desarrollo")
+        print("2. Determine los 5 mejores desarrolladores con el rol de Programador (basados en años de desarrollo)")
         print("3. Determine los 7 desarrolladores registrados con edad más avanzada")
         print("4. Determine el videojuego con más desarrolladores que provienen de Uruguay")
         print("")
-        seleccion = int(input("Ingresar seleccion:"))
-
-        if seleccion == 1:
-            self.determinar_10_mejores()
+        try:
+            seleccion = int(input("Ingresar seleccion: "))
+            if seleccion == 1:
+                self.determinar_10_mejores()
+            elif seleccion == 2:
+                self.determinar_5_mejores()
+            elif seleccion == 3:
+                self.determinar_los_7_desarrolladores_de_edad_mas_avanzada()
+            elif seleccion == 4:
+                self.determinar_el_videojuego_con_mas_desarrolladores_uruguayos()
+            else:
+                raise ValueError
+        except:
+            print("seleccion invalida")
             time.sleep(2)
             self.Menu_principal()
-        elif seleccion == 2:
-            self.determinar_5_mejores()
-            time.sleep(2)
-            self.Menu_principal()
-        elif seleccion == 4:
-            self.determinar_mejores_deasarolladores_Uruguayos()
-            time.sleep(2)
-            self.Menu_principal
-        elif seleccion == 5:
-            self.Finalizar_programa()
 
     def Finalizar_programa(self):
         print("Finalizar programa...")

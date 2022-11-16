@@ -40,4 +40,4 @@ class Desarrollador:
         return self._rol
 
     def __str__(self) -> str:
-        return "[{} ,{} ,{} ,{} ,{} ,{}, {}]".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)
+        return "{}, {}, {}, {}, {}, {}, {}".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)

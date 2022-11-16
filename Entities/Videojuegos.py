@@ -74,7 +74,7 @@ class Videojuego:
         return self._desarrolladores_asociados
 
     def __str__(self) -> str:
-        return "[{}, {}, {}, {}]".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.puntaje)
+        return "{}, {}, {}, {}".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.puntaje)
 
     def __str_desarrolladores_asociados__(self):
         string = ""
