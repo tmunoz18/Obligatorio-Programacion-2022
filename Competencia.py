@@ -269,8 +269,16 @@ class Competencia:
             print(f' {indice}. {i}')
             indice += 1
         print("")
-        categoria = int(input(" - Ingrese categoría del videojuego para la competencia:"))
-
+        
+        try:
+            categoria = int(input(" - Ingrese categoría del videojuego para la competencia:"))
+            if categoria < 1 or 4 < categoria:
+                raise ValueError
+        except:
+            print("Seleaccion Invalida")
+            time.sleep(2)
+            self.Menu_principal()
+        
         for videojuego in self.videojuegos:
             videojuego.calc_puntaje()
 
@@ -288,9 +296,12 @@ class Competencia:
 
         podio = sorted(podio, key=lambda posicion_1: (posicion_1[0], posicion_1[2], posicion_1[1]) , reverse=True)
         contador = 1
-        for ganadores in podio[:3]:
-            print(f' {contador} {ganadores[1]} Puntaje {ganadores[0]} Trabajadores {ganadores[2]} ')
-            contador += 1
+        if len(podio) != 0:
+            for ganadores in podio[:3]:
+                print(f' {contador} {ganadores[1]} Puntaje {ganadores[0]} Trabajadores {ganadores[2]} ')
+                contador += 1
+        else:
+            print(f'No hay videjuegos para la categoria {categoria1}')
         time.sleep(2)
         self.Menu_principal()
 
