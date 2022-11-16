@@ -1,6 +1,6 @@
 from Entities.Desarrollador import Desarrollador
 from Entities.Videojuegos import Videojuego
-from Competencia import Competencia
+from Entities.Competencia import Competencia
 
 if __name__ == "__main__":
     # Carga de datos del team 1
