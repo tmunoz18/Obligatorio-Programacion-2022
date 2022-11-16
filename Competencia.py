@@ -32,23 +32,23 @@ class Competencia:
         print("")
         try:
             seleccion = int(input(" - Ingrese seleccion aqui: "))
-            if seleccion == 1:
-                self.Alta_desarollador()
-            elif seleccion == 2:
-                self.Alta_videojuego()
-            elif seleccion == 3:
-                self.Simular_Competencia()
-            elif seleccion == 4:
-                self.Realizar_consulta()
-            elif seleccion == 5:
-                self.Finalizar_programa()
-            else:
+            if seleccion > 5 or seleccion < 1:
                 raise ValueError
         except:
             print("Seleccion Invalida")
             time.sleep(2)
             self.Menu_principal()
-
+        if seleccion == 1:
+            return self.Alta_desarollador()
+        elif seleccion == 2:
+            return self.Alta_videojuego()
+        elif seleccion == 3:
+            return self.Simular_Competencia()
+        elif seleccion == 4:
+            return self.Realizar_consulta()
+        elif seleccion == 5:
+            return self.Finalizar_programa()
+        
     def Alta_desarollador(self):
         print("Alta de desarrollador")
 
@@ -383,20 +383,21 @@ class Competencia:
         print("")
         try:
             seleccion = int(input("Ingresar seleccion: "))
-            if seleccion == 1:
-                self.determinar_10_mejores()
-            elif seleccion == 2:
-                self.determinar_5_mejores()
-            elif seleccion == 3:
-                self.determinar_los_7_desarrolladores_de_edad_mas_avanzada()
-            elif seleccion == 4:
-                self.determinar_el_videojuego_con_mas_desarrolladores_uruguayos()
-            else:
+            if seleccion > 4 or seleccion < 1:
                 raise ValueError
-        except:
+        except ValueError:
             print("seleccion invalida")
             time.sleep(2)
             self.Menu_principal()
+        if seleccion == 1:
+            self.determinar_10_mejores()
+        elif seleccion == 2:
+            self.determinar_5_mejores()
+        elif seleccion == 3:
+            self.determinar_los_7_desarrolladores_de_edad_mas_avanzada()
+        elif seleccion == 4:
+            self.determinar_el_videojuego_con_mas_desarrolladores_uruguayos()
+        
 
     def Finalizar_programa(self):
         print("Finalizar programa...")
