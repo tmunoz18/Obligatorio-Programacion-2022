@@ -20,7 +20,7 @@ class Competencia:
         return self._desarrolladores
 
     def Menu_principal(self):
-
+        print("")
         print("Menú principal:")
         print("")
         print(" Seleccione la opción del menú:")
@@ -263,41 +263,36 @@ class Competencia:
 
     def Simular_Competencia(self):
         print("Simular Competencia:")
-
         categorias = ["Acción", "Aventura", "Estrategia", "Puzzle"]
-
         indice = 1
         for i in categorias:
             print(f' {indice}. {i}')
             indice += 1
         print("")
-        categoria = int(
-            input(" - Ingrese categoría del videojuego para la competencia:"))
+        categoria = int(input(" - Ingrese categoría del videojuego para la competencia:"))
 
         for videojuego in self.videojuegos:
-            videojuego.competencia()
+            videojuego.calc_puntaje()
 
         categoria1 = categorias[categoria-1]
 
         competidores = [
-            videojuego for videojuego in self.videojuegos if videojuego == categoria1]
+            videojuego for videojuego in self.videojuegos if categoria1 in videojuego.categoria]
 
         podio = []
         for videojuego in competidores:
-            value = videojuego.valor
+            value = videojuego.puntaje
             nombre = videojuego.nombre
-            podio.extend([[value, nombre]])
+            cant_trabajadores = len(videojuego.desarrolladores_asociados)
+            podio.extend([[value, nombre, cant_trabajadores]])
 
-        podio = sorted(
-            podio, key=lambda posicion_1: posicion_1[0], reverse=True)
-
+        podio = sorted(podio, key=lambda posicion_1: (posicion_1[0], posicion_1[2], posicion_1[1]) , reverse=True)
         contador = 1
-        for ganadores in podio:
-            print(f' {contador} {ganadores[1]}')
-            if contador == 4:
-                break
-            else:
-                contador += 1
+        for ganadores in podio[:3]:
+            print(f' {contador} {ganadores[1]} Puntaje {ganadores[0]} Trabajadores {ganadores[2]} ')
+            contador += 1
+        time.sleep(2)
+        self.Menu_principal()
 
     def determinar_10_mejores(self):
         podio = []

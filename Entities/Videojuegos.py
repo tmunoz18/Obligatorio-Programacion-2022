@@ -5,7 +5,7 @@ class Videojuego:
         self._nombre = nombre
         self._categoria = categoria
         self._desarrolladores_asociados = []
-        self.valor = None
+        self.puntaje = None
 
     def cumple_minimo(self):
         diseñadores = 2
@@ -33,37 +33,33 @@ class Videojuego:
 
         return integrantes_ok
 
-    def todo_sea_por_la_eficiencia(self, promedio_years, desarollador, indice):
-        if promedio_years[indice] != 0:
-            promedio_years[indice] += desarollador.cantidad_de_años_de_desarollo
-            promedio_years[indice] /= 2
-
-        else:
-            promedio_years[indice] = desarollador.cantidad_de_años_de_desarollo
-
-    def competencia(self):
-        if self.valor == None:
-            promedio_years = [0, 0, 0, 0]
-            for desarollador in self.desarrolladores_asociados:
-                if desarollador.rol == "Diseñador":
-                    self.todo_sea_por_la_eficiencia(
-                        promedio_years, desarollador, 0)
-                elif desarollador.rol == "Productor":
-                    self.todo_sea_por_la_eficiencia(
-                        promedio_years, desarollador, 1)
-                elif desarollador.rol == "Programador":
-                    self.todo_sea_por_la_eficiencia(
-                        promedio_years, desarollador, 2)
-                elif desarollador.rol == "Tester":
-                    self.todo_sea_por_la_eficiencia(
-                        promedio_years, desarollador, 3)
-                else:
-                    raise ValueError
-            valor = promedio_years[0]*0.2 + promedio_years[1] * \
-                0.12+promedio_years[2]*0.5+promedio_years[3]*0.18
-            self.valor = valor
-
-        return self.valor
+    def calc_promedio(self):
+        avg = [0, 0, 0, 0]
+        cant = [0, 0, 0, 0]
+        for dev in self._desarrolladores_asociados:
+            if dev.rol == "Diseñador":
+                avg[0] += dev.cantidad_de_años_de_desarollo
+                cant[0] += 1
+            elif dev.rol == "Productor":
+                avg[1] += dev.cantidad_de_años_de_desarollo
+                cant[1] += 1
+            elif dev.rol == "Programador":
+                avg[2] += dev.cantidad_de_años_de_desarollo
+                cant[2] += 1
+            elif dev.rol == "Tester":
+                avg[3] += dev.cantidad_de_años_de_desarollo
+                cant[3] += 1
+        avg[0] = avg[0] / cant[0]
+        avg[1] = avg[1] / cant[1]
+        avg[2] = avg[2] / cant[2]
+        avg[3] = avg[3] / cant[3]
+        return avg
+    
+    def calc_puntaje(self):
+        if self.puntaje == None:
+            avg_years = self.calc_promedio()
+            self.puntaje = avg_years[0] * 0.2 + avg_years[1] * 0.12 + avg_years[2] * 0.5 + avg_years[3] * 0.18
+        return self.puntaje
 
     @property
     def nombre(self):
@@ -78,13 +74,10 @@ class Videojuego:
         return self._desarrolladores_asociados
 
     def __str__(self) -> str:
-        return "[{}, {}, {}, {}]".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.valor)
+        return "[{}, {}, {}, {}]".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.puntaje)
 
     def __str_desarrolladores_asociados__(self):
         string = ""
         for desarrolladores_asociados in self.desarrolladores_asociados:
             string += str(desarrolladores_asociados) + " "
         return string
-
-    def __eq__(self, otro) -> bool:
-        return self.categoria == otro
