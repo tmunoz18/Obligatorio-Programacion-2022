@@ -11,7 +11,7 @@ class Desarrollador:
         self._apellido = apellido
         self._pais_de_origen = pais_de_origen
         self._fecha_de_nacimiento = fecha_de_nacimiento
-        self.cantidad_de_años_de_desarollo = cantidad_de_años_de_desarollo
+        self._cantidad_de_años_de_desarollo = cantidad_de_años_de_desarollo
         self._rol = rol
 
     @property
@@ -38,6 +38,14 @@ class Desarrollador:
     @property
     def rol(self):
         return self._rol
+    
+    @property
+    def cantidad_de_años_de_desarollo(self):
+        return self._cantidad_de_años_de_desarollo
+    
+    @cantidad_de_años_de_desarollo.setter
+    def cantidad_de_años_de_desarollo(self, x):
+        self._cantidad_de_años_de_desarollo = x
 
     def __str__(self) -> str:
-        return "{}, {}, {}, {}, {}, {}, {}".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)
+        return "['_cedula': {}, '_nombre': {}, '_apellido': {}, '_pais_de_origen': {}, '_fecha_de_nacimiento': {}, '_cantidad_de_años_de_desarollo': {}, '_rol': {}]".format(self.cedula, self.nombre, self.apellido, self.pais_de_origen, self.fecha_de_nacimiento, self.cantidad_de_años_de_desarollo, self.rol)

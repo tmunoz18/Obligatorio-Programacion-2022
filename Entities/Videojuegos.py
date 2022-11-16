@@ -5,7 +5,7 @@ class Videojuego:
         self._nombre = nombre
         self._categoria = categoria
         self._desarrolladores_asociados = []
-        self.puntaje = None
+        self._puntaje = None
 
     def cumple_minimo(self):
         diseñadores = 2
@@ -73,11 +73,21 @@ class Videojuego:
     def desarrolladores_asociados(self):
         return self._desarrolladores_asociados
 
+    @property
+    def puntaje(self):
+        return self._puntaje
+    
+    @puntaje.setter
+    def puntaje(self, x):
+        self._puntaje = x
+    
+    
+    
     def __str__(self) -> str:
-        return "{}, {}, {}, {}".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.puntaje)
+        return "{"+"'_nombre': {}, '_categoria': {}, '_desarrolladores_asociados': [{}], '_puntaje':{}".format(self.nombre, self.categoria, self.__str_desarrolladores_asociados__(), self.puntaje)+"}"
 
     def __str_desarrolladores_asociados__(self):
         string = ""
         for desarrolladores_asociados in self.desarrolladores_asociados:
-            string += str(desarrolladores_asociados) + " "
+            string += str(desarrolladores_asociados) + ",\n"
         return string

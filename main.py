@@ -42,6 +42,6 @@ if __name__ == "__main__":
     # carga de datos de Competencia
     competencia = Competencia()
     competencia.desarrolladores.extend([Persona1, Persona2, Persona3, Persona4, Persona5, Persona6, Persona7, Persona8, Persona9, Persona10, Persona11, Persona12, Persona13, Persona14, Persona15, Persona16, Persona17, Persona18, Persona19, Persona20, Persona21, Persona22, Persona23, Persona24])
-    competencia.videojuegos.extend([Team3, Team1, Team2])
+    competencia.videojuegos.extend([Team3, Team2])
     
     competencia.Menu_principal()

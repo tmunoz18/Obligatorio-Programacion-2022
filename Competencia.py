@@ -112,8 +112,7 @@ class Competencia:
         print("")
 
         try:
-            inicio_laboral = datetime.date.today(
-            ) - datetime.timedelta(days=int(años_de_desarrollo) * 365)
+            inicio_laboral = datetime.date.today() - datetime.timedelta(days=int(años_de_desarrollo) * 365)
             if inicio_laboral < fecha_datetime:
                 raise ValueError
         except ValueError:
@@ -141,7 +140,7 @@ class Competencia:
 
         # agrego el desarrollador
         self.desarrolladores.append(Desarrollador(
-            cedula, nombre, apellido, pais_origen, fecha, años_de_desarrollo, rol))
+            cedula, nombre, apellido, pais_origen, fecha, int(años_de_desarrollo), rol))
         print("Desarollador agregado correctamente!")
         time.sleep(2)
         return self.Menu_principal()
@@ -369,11 +368,12 @@ class Competencia:
 
         podio = sorted(podio, key=lambda posicion_1: posicion_1[0], reverse=True)
         podio = [persona[1] for persona in podio]
-
-        print(podio[0].__dict__)
+        
+        print(podio[0])
         time.sleep(2)
         self.Menu_principal()
-
+        
+        
     def Realizar_consulta(self):
         print("Realizar Consulta")
         print("1. Determine los 10 mejores desarrolladores registrados (basados en años de desarrollo)")
